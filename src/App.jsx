@@ -3,7 +3,7 @@ import Menu from "./Components/3.Props/Menu";
 import BasicRouter from "./Components/4.Router/BasicRouter";
 import ReactRouter from "./Components/4.Router/ReactRouter";
 import SendAPI from "./Components/2.Effect/SendAPI";
-
+import MovieListMain from "./Components/MovieList/MovieListMain";
 
 const GlobalStyle = createGlobalStyle`
   *{
@@ -18,15 +18,13 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-
-
 function App() {
   return (
     <div>
       <GlobalStyle />
-      <SendAPI />
+      <MovieListMain />
     </div>
   );
 }
 
-export default App; 
+export default App;
