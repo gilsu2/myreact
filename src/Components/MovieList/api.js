@@ -7,12 +7,13 @@ const header = {
       "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0NDFmN2JmMDgwOWMxZGFlNTViYzgyMTkzNDcwMTQwMiIsIm5iZiI6MTcyMTg4NDQ4OS4wMDI2MTcsInN1YiI6IjY0Njk2MzUwYTUwNDZlMDBlNWI2NjBkMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.r3fi44yAiziGcROaufG04pkpjYAp71lcMtXXM9bXbPY",
   },
 };
+export const IMG_PATH = "https://image.tmdb.org/t/p/original";
 
 export const categories = [
-  { category: "Now Playing", fun: getMoviesNowPlaying },
-  { category: "Popular", fun: getMoviesPopular },
-  { category: "Top Rated", fun: getMoviesTopRated },
-  { category: "Upcoming", fun: getMoviesUpcoming },
+  { category: "Now Playing", func: getMoviesNowPlaying },
+  { category: "Popular", func: getMoviesPopular },
+  { category: "Top Rated", func: getMoviesTopRated },
+  { category: "Upcoming", func: getMoviesUpcoming },
 ];
 
 export async function getGenreListMovie() {
@@ -50,11 +51,33 @@ export function getMoviesUpcoming() {
   );
 }
 
-export function getGenreName(idList) {
-  const genreList = JSON.parse(sessionStorage.getItem("GenreList"));
+export function getMovieDetailById(id) {
+  return axios.get(
+    `https://api.themoviedb.org/3/movie/${id}?language=en-US`,
+    header
+  );
+}
+
+export function getMovieCreditById(id) {
+  return axios.get(
+    `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`,
+    header
+  );
+}
+
+export function searchMoviesByKeyword(Keyword) {
+  return axios.get(
+    `https://api.themoviedb.org/3/search/movie?query=${Keyword}&include_adult=false&language=en-US&page=1`,
+    header
+  );
+}
+
+// [12, 35, 80]과 같이 숫자의 배열을 매개변수로 전달하면
+// "Adventure, Drama, Crime"과 같이 장르문자열을 리턴하는 함수
+export function getGenreName(genreList, idList) {
   return idList
     .map((id) => {
-      const found = genreList.genres.find((genre) => genre.id == id);
+      const found = genreList.find((genre) => genre.id == id);
       return found ? found.name : "";
     })
     .filter((name) => name)
