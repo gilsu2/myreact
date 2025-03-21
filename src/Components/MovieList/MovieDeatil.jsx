@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { getMovieCreditById, getMovieDetailById, IMG_PATH } from "./api";
-// import { IconBack } from "./icons";
+import { IconBack } from "./Icons";
 
 const Container = styled.div`
   width: 100%;
@@ -16,6 +16,8 @@ const Header = styled.div`
   justify-content: space-between;
 `;
 const Icon = styled.div`
+  width: 50px;
+  height: 50px;
   cursor: pointer;
 `;
 
@@ -29,6 +31,12 @@ const Content = styled.div`
   line-height: 30px;
   color: #333;
   margin-top: 20px;
+`;
+
+const Bottom = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  color: dodgerblue;
 `;
 
 function MovieDeatil() {
@@ -66,7 +74,9 @@ function MovieDeatil() {
           <>
             <Header>
               <h1>{data.title}</h1>
-              <Icon></Icon>
+              <Icon onClick={() => navigate(-1)}>
+                <IconBack />
+              </Icon>
             </Header>
             <Img src={IMG_PATH + data.backdrop_path}></Img>
             <Content>
@@ -104,6 +114,12 @@ function MovieDeatil() {
               <br />
               <p>{data.overview}</p>
             </Content>
+            <Bottom>
+              <Icon onClick={() => navigate(-1)}>
+                {/* navigate()가 음수이면 이전페이지 숫자는 n번째 전 페이지를 의미 */}
+                <IconBack />
+              </Icon>
+            </Bottom>
             <br />
             <br />
             <br />

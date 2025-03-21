@@ -1,11 +1,14 @@
-import React from 'react';
+import React from "react";
+import { useUserStore } from "./Login";
 
 function MyPage() {
-    return (
-        <div>
-            <h1>Mypage</h1>
-        </div>
-    );
+  const { user } = useUserStore();
+  console.log(user?.email);
+  return (
+    <div>
+      <h1>Mypage</h1>
+    </div>
+  );
 }
 
 export default MyPage;

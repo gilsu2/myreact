@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { categories, getGenreListMovie, getGenreName } from "./api";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import image from "./img/image.png";
 
 const Tab = styled.div`
   display: flex;
@@ -55,7 +56,7 @@ function MovieList() {
   const [selectedCat, setSelectedCat] = useState(0);
   const [genreList, setGenreList] = useState([]);
   const IMG_PATH = "https://image.tmdb.org/t/p/original";
-  const navigate = useNavigate(); //url수정함수
+  const navigate = useNavigate();
 
   useEffect(() => {
     getMovies(0);
@@ -65,27 +66,16 @@ function MovieList() {
   // 2. try~catch구문을 이용하는 것이 좋다.
   async function getMovies(index) {
     try {
-      // 장르리스트가 상태에 없을 경우 처리
-      if (genreList.length === 0) {
-        const storedGenreList = JSON.parse(sessionStorage.getItem("GenreList"));
-        if (storedGenreList && storedGenreList.length > 0) {
-          // 세션스토리지에 값이 있으면 상태 업데이트
-          console.log("세션스토리지에 값이 있음");
-          setGenreList(storedGenreList);
-        } else {
-          // 세션스토리지에도 없으면 API 호출
-          console.log("세션스토리지에도 없어서 API 호출");
-          const response = await getGenreListMovie(); // 200 OK
-          setGenreList(response.data.genres);
-          sessionStorage.setItem(
-            "GenreList",
-            JSON.stringify(response.data.genres)
-          );
-        }
+      // 장르리스트 요청
+      let response = await getGenreListMovie();
+      if (!response || response.length === 0) {
+        console.log("장르 데이터를 가져오지 못했습니다.");
+        return;
       }
-
+      console.log(response);
+      setGenreList(response);
       // 무비리스트 요청
-      let response = await categories[index].func(); // 200 OK
+      response = await categories[index].func(); // 200 OK
       console.log(response.data);
       setSelectedCat(index);
       setData(response.data);
@@ -116,7 +106,9 @@ function MovieList() {
         ) : (
           data.results.map((movie) => (
             <Card key={movie.id} onClick={() => navigate(`${movie.id}`)}>
-              <Img src={IMG_PATH + movie.poster_path}></Img>
+              <Img
+                src={movie.poster_path ? IMG_PATH + movie.poster_path : image}
+              ></Img>
               <Text>타이틀 : {movie.title}</Text>
               <Text>장르 : {getGenreName(genreList, movie.genre_ids)}</Text>
               <hr />
