@@ -4,6 +4,7 @@ import BasicRouter from "./Components/4.Router/BasicRouter";
 import ReactRouter from "./Components/4.Router/ReactRouter";
 import SendAPI from "./Components/2.Effect/SendAPI";
 import MovieListMain from "./Components/MovieList/MovieListMain";
+import ChatRoomMain from "./Components/ChatRoom/ChatRoomMain";
 
 const GlobalStyle = createGlobalStyle`
   *{
