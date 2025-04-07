@@ -5,6 +5,8 @@ import ReactRouter from "./Components/4.Router/ReactRouter";
 import SendAPI from "./Components/2.Effect/SendAPI";
 import MovieListMain from "./Components/MovieList/MovieListMain";
 import ChatRoomMain from "./Components/ChatRoom/ChatRoomMain";
+import { ChartTest1 } from "./Components/Chartjs/ChartTest1";
+import { ChartTest2 } from "./Components/Chartjs/ChartTest2";
 
 const GlobalStyle = createGlobalStyle`
   *{
